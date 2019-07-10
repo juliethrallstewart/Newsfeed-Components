@@ -166,7 +166,53 @@ function createPanel(obj) {
 
   return article;
 
-
-
-
 }
+
+
+
+// Chris's Alternative
+
+// function createElement(name, className = '', content = '') {
+//   if (!name) return;
+//   let element = document.createElement(name);
+//   element.classList.add(className);
+//   element.textContent = content;
+//   return element;
+// }
+
+// function createComponent(article, index) {
+//   let container = createElement('div', 'article'),
+//     title = createElement('h2', null, article.title),
+//     date = createElement('p', 'date', article.date),
+//     p1 = createElement('p', null, article.firstParagraph),
+//     p2 = createElement('p', null, article.secondParagraph),
+//     p3 = createElement('p', null, article.thirdParagraph),
+//     expand = createElement('span', 'expandButton', 'Open');
+
+//   container.appendChild(title);
+//   container.appendChild(date);
+//   container.appendChild(p1);
+//   container.appendChild(p2);
+//   container.appendChild(p3);
+//   container.appendChild(expand);
+//   container.setAttribute('id', `article-${index}`);
+//   expand.setAttribute('id', `button-${index}`);
+
+//   expand.addEventListener('click', e => {
+//     let current = e.target
+//     let id = current.id.charAt(current.id.length - 1);
+//     let element = document.querySelector(`#article-${id}.article`);
+//     element.classList.toggle('article-open');
+//   });
+
+//   return container;
+// }
+
+// function addComponents(data) {
+//   let articles = document.querySelector('.articles');
+//   data.forEach((obj, index) => {
+//     articles.appendChild(createComponent(obj, index));
+//   });
+// }
+
+// addComponents(data);

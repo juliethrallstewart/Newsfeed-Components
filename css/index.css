@@ -105,6 +105,9 @@
 .menu--open {
   display: block;
 }
+body {
+  background-color: red;
+}
 html,
 body {
   margin: 0;
