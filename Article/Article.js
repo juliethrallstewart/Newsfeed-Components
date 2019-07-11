@@ -239,3 +239,74 @@ function createPanel(obj) {
 // }
 
 // addComponents(data);
+
+//Blevins solution code: 
+/*
+function articleComponent(articleObj) {
+  const article = document.createElement('div');
+  article.classList.add('article');
+
+  const title = document.createElement('h2');
+  title.textContent = articleObj.title;
+
+  const date = document.createElement('p');
+  date.classList.add('date');
+  date.textContent = articleObj.date;
+
+  const para1 = document.createElement('p');
+  para1.textContent = articleObj.firstParagraph;
+  const para2 = document.createElement('p');
+  para2.textContent = articleObj.secondParagraph;
+  const para3 = document.createElement('p');
+  para3.textContent = articleObj.thirdParagraph;
+
+  const expandButton = document.createElement('button');
+  expandButton.classList.add('expandButton');
+  expandButton.textContent = 'expand';
+
+  article.appendChild(title);
+  article.appendChild(date);
+  article.appendChild(para1, para2, para3);
+  article.appendChild(expandButton);
+
+  // Step 2: Add an event listener to the expandButton button. This event
+  // listener should toggle the class 'article-open' on the 'article' div.
+  article.addEventListener('transitionend', () => {
+    article.style.height = '';
+  });
+  expandButton.addEventListener('click', () => {
+    // If you don't want CSS animations, uncomment the below line and remove
+    // everything else inside this event listener, as well as the
+    // 'transitionend' even listener above
+    // article.classList.toggle('article-open');
+    if (article.classList.contains('article-open')) {
+      article.classList.remove('article-open');
+    } else {
+      article.style.height = `
+$ {
+  article.scrollHeight
+}
+px `;
+      article.classList.add('article-open');
+    }
+  });
+
+  // Step 3: return the entire component.
+  return article;
+}
+
+// Step 4: Map over the data, creating a component for each oject and add each
+// component to the DOM as children of the 'articles' div.
+
+const articles = document.querySelector('.articles');
+data.forEach(articleObj => {
+  const article = articleComponent(articleObj);
+  articles.appendChild(article);
+});
+
+
+/* 
+
+  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
+
+*/

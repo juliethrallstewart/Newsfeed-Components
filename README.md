@@ -5,6 +5,8 @@ In this project we are going to be building a news feed reader. The goal is to h
 
 
 **** IN THIS LESSON WE LEARN FUNCTIONAL COMPONENTS VS CLASS COMPONENTS*****
+**Blevins tutorial**
+https://www.youtube.com/watch?v=pXSNKbQ68a4&feature=youtu.be
 
 ### Need to know:
 * CSS (LESS):
