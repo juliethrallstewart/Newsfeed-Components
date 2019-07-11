@@ -87,7 +87,7 @@ const data = [{
   }
 ];
 
-/* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
+/* Step 1: Create a ****function component*** (vs class component) that creates a component. You will want your component to look like the template below: 
   
   <div class="article">
     <h2>{title of the article}</h2>
@@ -130,7 +130,10 @@ function createPanel(obj) {
   const firstParagraph = document.createElement('p');
   const secondParagraph = document.createElement('p');
   const thirdParagraph = document.createElement('p');
-  const expandButton = document.createElement('span');
+
+  const expandButtonOpen = document.createElement('span');
+  const expandButtonClose = document.createElement('span');
+
 
   // setup structure of elements
 
@@ -139,13 +142,19 @@ function createPanel(obj) {
   article.appendChild(firstParagraph);
   article.appendChild(secondParagraph);
   article.appendChild(thirdParagraph);
-  article.appendChild(expandButton);
+  article.appendChild(expandButtonOpen);
+  article.appendChild(expandButtonClose);
+
+
 
   // set class names
 
   article.classList.add('article');
   articleDate.classList.add('date');
-  expandButton.classList.add('expandButton');
+  expandButtonOpen.classList.add('expandButtonOpen');
+  expandButtonClose.classList.add('expandButtonClose', 'hide-btn');
+
+
 
   // set text content 
 
@@ -154,14 +163,28 @@ function createPanel(obj) {
   firstParagraph.textContent = obj.firstParagraph;
   secondParagraph.textContent = obj.secondParagraph;
   thirdParagraph.textContent = obj.thirdParagraph;
-  expandButton.textContent = "expand";
+  expandButtonOpen.textContent = "open";
+  expandButtonClose.textContent = "close";
+
+
 
   // button events 
 
-  expandButton.addEventListener('click', event => {
+  expandButtonOpen.addEventListener('click', event => {
     console.log("button clicked!, event.target");
     //toggle .article-open
-    article.classList.toggle('article-open')
+    article.classList.toggle('article-open');
+    expandButtonOpen.classList.toggle('hide-btn');
+    expandButtonClose.classList.toggle('hide-btn');
+    event.stopPropagation;
+  })
+
+  expandButtonClose.addEventListener('click', event => {
+    console.log("button clicked!, event.target");
+    //toggle .article-open
+    article.classList.toggle('article-open');
+    expandButtonOpen.classList.toggle('hide-btn');
+    expandButtonClose.classList.toggle('hide-btn');
   })
 
   return article;
