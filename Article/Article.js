@@ -1,7 +1,6 @@
 /* This is the data we will be using to create our article components */
 /* Look over this data, then proceed to line 91*/
-const data = [
-  {
+const data = [{
     title: 'Lambda School Students: "We\'re the best!"',
     date: 'Nov 5th, 2018',
     firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando
@@ -88,7 +87,7 @@ const data = [
   }
 ];
 
-/* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
+/* Step 1: Create a ****function component*** (vs class component) that creates a component. You will want your component to look like the template below: 
   
   <div class="article">
     <h2>{title of the article}</h2>
@@ -108,6 +107,205 @@ const data = [
   Step 3: return the entire component.
 
   Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+
+  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
+
+*/
+
+const articles = document.querySelector('.articles')
+
+data.forEach(item => {
+  articles.appendChild(createPanel(item))
+
+});
+
+function createPanel(obj) {
+
+
+  // define new elements
+
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const articleDate = document.createElement('p');
+  const firstParagraph = document.createElement('p');
+  const secondParagraph = document.createElement('p');
+  const thirdParagraph = document.createElement('p');
+
+  const expandButtonOpen = document.createElement('span');
+  const expandButtonClose = document.createElement('span');
+
+
+  // setup structure of elements
+
+  article.appendChild(articleTitle);
+  article.appendChild(articleDate);
+  article.appendChild(firstParagraph);
+  article.appendChild(secondParagraph);
+  article.appendChild(thirdParagraph);
+  article.appendChild(expandButtonOpen);
+  article.appendChild(expandButtonClose);
+
+
+
+  // set class names
+
+  article.classList.add('article');
+  articleDate.classList.add('date');
+  expandButtonOpen.classList.add('expandButtonOpen');
+  expandButtonClose.classList.add('expandButtonClose', 'hide-btn');
+
+
+
+  // set text content 
+
+  articleTitle.textContent = obj.title;
+  articleDate.textContent = obj.date;
+  firstParagraph.textContent = obj.firstParagraph;
+  secondParagraph.textContent = obj.secondParagraph;
+  thirdParagraph.textContent = obj.thirdParagraph;
+  expandButtonOpen.textContent = "open";
+  expandButtonClose.textContent = "close";
+
+
+
+  // button events 
+
+  expandButtonOpen.addEventListener('click', event => {
+    console.log("button clicked!, event.target");
+    //toggle .article-open
+    article.classList.toggle('article-open');
+    expandButtonOpen.classList.toggle('hide-btn');
+    expandButtonClose.classList.toggle('hide-btn');
+    event.stopPropagation;
+  })
+
+  expandButtonClose.addEventListener('click', event => {
+    console.log("button clicked!, event.target");
+    //toggle .article-open
+    article.classList.toggle('article-open');
+    expandButtonOpen.classList.toggle('hide-btn');
+    expandButtonClose.classList.toggle('hide-btn');
+  })
+
+  return article;
+
+}
+
+
+
+// Chris's Alternative
+
+// function createElement(name, className = '', content = '') {
+//   if (!name) return;
+//   let element = document.createElement(name);
+//   element.classList.add(className);
+//   element.textContent = content;
+//   return element;
+// }
+
+// function createComponent(article, index) {
+//   let container = createElement('div', 'article'),
+//     title = createElement('h2', null, article.title),
+//     date = createElement('p', 'date', article.date),
+//     p1 = createElement('p', null, article.firstParagraph),
+//     p2 = createElement('p', null, article.secondParagraph),
+//     p3 = createElement('p', null, article.thirdParagraph),
+//     expand = createElement('span', 'expandButton', 'Open');
+
+//   container.appendChild(title);
+//   container.appendChild(date);
+//   container.appendChild(p1);
+//   container.appendChild(p2);
+//   container.appendChild(p3);
+//   container.appendChild(expand);
+//   container.setAttribute('id', `article-${index}`);
+//   expand.setAttribute('id', `button-${index}`);
+
+//   expand.addEventListener('click', e => {
+//     let current = e.target
+//     let id = current.id.charAt(current.id.length - 1);
+//     let element = document.querySelector(`#article-${id}.article`);
+//     element.classList.toggle('article-open');
+//   });
+
+//   return container;
+// }
+
+// function addComponents(data) {
+//   let articles = document.querySelector('.articles');
+//   data.forEach((obj, index) => {
+//     articles.appendChild(createComponent(obj, index));
+//   });
+// }
+
+// addComponents(data);
+
+//Blevins solution code: 
+/*
+function articleComponent(articleObj) {
+  const article = document.createElement('div');
+  article.classList.add('article');
+
+  const title = document.createElement('h2');
+  title.textContent = articleObj.title;
+
+  const date = document.createElement('p');
+  date.classList.add('date');
+  date.textContent = articleObj.date;
+
+  const para1 = document.createElement('p');
+  para1.textContent = articleObj.firstParagraph;
+  const para2 = document.createElement('p');
+  para2.textContent = articleObj.secondParagraph;
+  const para3 = document.createElement('p');
+  para3.textContent = articleObj.thirdParagraph;
+
+  const expandButton = document.createElement('button');
+  expandButton.classList.add('expandButton');
+  expandButton.textContent = 'expand';
+
+  article.appendChild(title);
+  article.appendChild(date);
+  article.appendChild(para1, para2, para3);
+  article.appendChild(expandButton);
+
+  // Step 2: Add an event listener to the expandButton button. This event
+  // listener should toggle the class 'article-open' on the 'article' div.
+  article.addEventListener('transitionend', () => {
+    article.style.height = '';
+  });
+  expandButton.addEventListener('click', () => {
+    // If you don't want CSS animations, uncomment the below line and remove
+    // everything else inside this event listener, as well as the
+    // 'transitionend' even listener above
+    // article.classList.toggle('article-open');
+    if (article.classList.contains('article-open')) {
+      article.classList.remove('article-open');
+    } else {
+      article.style.height = `
+$ {
+  article.scrollHeight
+}
+px `;
+      article.classList.add('article-open');
+    }
+  });
+
+  // Step 3: return the entire component.
+  return article;
+}
+
+// Step 4: Map over the data, creating a component for each oject and add each
+// component to the DOM as children of the 'articles' div.
+
+const articles = document.querySelector('.articles');
+data.forEach(articleObj => {
+  const article = articleComponent(articleObj);
+  articles.appendChild(article);
+});
+
+
+/* 
 
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
 
